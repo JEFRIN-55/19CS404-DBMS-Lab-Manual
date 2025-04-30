@@ -48,25 +48,60 @@ Design a database for patient management, appointments, medical records, and bil
 # ER Diagram Submission - Student Name
 
 ## Scenario Chosen:
-University / Hospital (choose one)
+University 
 
 ## ER Diagram:
-![ER Diagram](er_diagram.png)
+![WhatsApp Image 2025-04-30 at 15 08 59_6aceb566](https://github.com/user-attachments/assets/0ef7b5f5-08e4-40fa-83f6-538a44323751)
 
 ## Entities and Attributes:
-- Entity1: Attributes
-- Entity2: Attributes
+
+Student  
+   Attributes: admission number (ad.no), full name, date of birth (DOB), mobile number, email
+
+Faculty  
+   Attributes: staff number, name, mobile number, email
+
+Program  
+   Attributes: identifier, name, governing department
+
+Courses  
+   Attributes: course number, name, number of credits, total units
 ...
 
 ## Relationships and Constraints:
-- Relationship1 (Cardinality, Participation)
-- Relationship2 (Cardinality, Participation)
+
+Enroll
+
+   Between: Student and Program   
+   Cardinality: Many students enroll in one program
+   
+Learn
+
+   Between: Student and Courses  
+   Cardinality: Many students learn many courses (Many-to-Many)
+
+Teach
+
+   Between: Faculty and Courses  
+   Cardinality: One faculty can teach many courses; a course can be taught by one or more faculty
+
+Prerequisite
+
+   Between: Courses and Courses  
+   Cardinality: One course can be a prerequisite for one or more other courses
 ...
 
 ## Extension (Prerequisite / Billing):
-- Explain how you modeled prerequisites or billing.
-
+The "prerequisite" relationship is used to model course dependencies.
+   Each course may require another course to be completed first.
+   This is represented as a recursive relationship on the Courses entity.
+ 
 ## Design Choices:
-Brief explanation of why you chose certain entities, relationships, and assumptions
+Program is connected to the Student via an "enroll" relationship, showing student registration.
+   Faculty and Student both connect to Courses via "teach" and "learn" relationships, respectively.
+   The Courses entity includes standard attributes like course number, name, and credits.
+   The Prerequisite is added as a recursive relationship, essential in university course planning.
+
 
 ## RESULT
+Successfully designed and submitted an ER diagram for a University Database showing Students, Faculty, Courses, Programs, and the relationship among them including prerequisites.
