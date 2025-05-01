@@ -38,123 +38,193 @@ HAVING condition;
 
 **Question 1**
 --
--- Paste Question 1 here
+How many medical records does each doctor have?
+Sample table:MedicalRecords Table
+![image (6)](https://github.com/user-attachments/assets/b2acc02d-4342-4cfa-bf94-951f79b956b5)
 
 ```sql
--- Paste your SQL code below for Question 1
+select DoctorID,
+count(*) as TotalRecords from MedicalRecords 
+group by DoctorID ;
 ```
 
 **Output:**
 
-![Output1](output.png)
+![image](https://github.com/user-attachments/assets/bf623453-05a2-4ed5-940f-5bd4bfeda8b8)
 
 **Question 2**
 ---
--- Paste Question 2 here
+What is the most common diagnosis among patients?
+Sample table:MedicalRecords Table
+![image (6)](https://github.com/user-attachments/assets/e1cd5ca0-f32a-4bfa-b8f1-721a1040413f)
 
 ```sql
--- Paste your SQL code below for Question 2
+select Diagnosis,
+count(*) as DiagnosisCount from MedicalRecords 
+group by Diagnosis
+order by DiagnosisCount DESC limit 1;
 ```
 
 **Output:**
 
-![Output2](output.png)
+![image](https://github.com/user-attachments/assets/e0616024-de48-42a3-8469-672427bca55e)
 
 **Question 3**
 ---
--- Paste Question 3 here
+How many appointments are scheduled for each patient?
+Sample table: Appointments Table
+| Name                | Type      |
+|---------------------|-----------|
+| AppointmentID       | INTEGER   |
+| PatientID           | INTEGER   |
+| DoctorID            | INTEGER   |
+| AppointmentDateTime | DATETIME  |
+| Purpose             | TEXT      |
+| Status              | TEXT      |
 
 ```sql
--- Paste your SQL code below for Question 3
+select PatientID,
+count(*) as TotalAppointments from Appointments 
+group by PatientID;
 ```
 
 **Output:**
 
-![Output3](output.png)
+![image](https://github.com/user-attachments/assets/bc46b97a-3ccc-4297-b39f-7daaa9f305b4)
 
 **Question 4**
 ---
--- Paste Question 4 here
+Write a SQL query to find the maximum purchase amount.
+Sample table: orders
+| ord_no | purch_amt | ord_date   | customer_id | salesman_id |
+|--------|-----------|------------|-------------|-------------|
+| 70001  | 150.5     | 2012-10-05 | 3005        | 5002        |
+| 70009  | 270.65    | 2012-09-10 | 3001        | 5005        |
+| 70002  | 65.26     | 2012-10-05 | 3002        | 5001        |
+
 
 ```sql
--- Paste your SQL code below for Question 4
+select max(purch_amt) as MAXIMUM from orders ;
 ```
 
 **Output:**
 
-![Output4](output.png)
+![image](https://github.com/user-attachments/assets/cae62290-7132-42b4-ab7c-794633ceb87f)
 
 **Question 5**
 ---
--- Paste Question 5 here
+Write a SQL query to find What is the age difference between the youngest and oldest employee in the company.
+Table: employee
+| name   | type    |
+|--------|---------|
+| id     | INTEGER |
+| name   | TEXT    |
+| age    | INTEGER |
+| city   | TEXT    |
+| income | INTEGER |
 
 ```sql
--- Paste your SQL code below for Question 5
+select max(age) - min(age) as age_difference from employee;
 ```
 
 **Output:**
 
-![Output5](output.png)
+![image](https://github.com/user-attachments/assets/6f177a35-175f-42ee-b154-28de541a6c4a)
 
 **Question 6**
 ---
--- Paste Question 6 here
+Write a SQL query to find how many employees have an income greater than 50K?
+Table: employee
+| Name   | Type    |
+|--------|---------|
+| id     | INTEGER |
+| name   | TEXT    |
+| age    | INTEGER |
+| city   | TEXT    |
+| income | INTEGER |
 
 ```sql
--- Paste your SQL code below for Question 6
+select count(*) as employees_count from employee 
+where income > 50000;
 ```
 
 **Output:**
 
-![Output6](output.png)
+![image](https://github.com/user-attachments/assets/727c55d0-e5ff-46d6-bab2-345b8a696e28)
 
 **Question 7**
 ---
--- Paste Question 7 here
+Write a SQL query to find the youngest employee in the company?
+Table: employee
+| Name   | Type    |
+|--------|---------|
+| id     | INTEGER |
+| name   | TEXT    |
+| age    | INTEGER |
+| city   | TEXT    |
+| income | INTEGER |
+
 
 ```sql
--- Paste your SQL code below for Question 7
+select name as Employee_Name,min(age) as Age from employee;
 ```
 
 **Output:**
 
-![Output7](output.png)
+![image](https://github.com/user-attachments/assets/5c75e99d-1472-453a-984a-ae5856d5297f)
 
 **Question 8**
 ---
--- Paste Question 8 here
+Write an SQL query that groups the customer data into 5-year age intervals, calculates the minimum salary for each group, and excludes groups where the minimum salary is not less than 2000.
+Table: customer1
+![unnamed](https://github.com/user-attachments/assets/ad339d4a-b6ff-43e6-b492-d2e77bc5552c)
 
 ```sql
--- Paste your SQL code below for Question 8
+select 
+(age/5) * 5 || '-' || ((age/5)*5 +4) as age_group,
+min(salary) as 'MIN(salary)'
+from customer1
+group by (age/5) 
+having min(salary) < 2000;
 ```
 
 **Output:**
 
-![Output8](output.png)
+![image](https://github.com/user-attachments/assets/e69e7a68-df95-4354-b24e-002fec148c9f)
 
 **Question 9**
 ---
--- Paste Question 9 here
+Write the SQL query that accomplishes the grouping of data by addresses, calculates the sum of salaries for each address, and excludes addresses where the total salary sum is not greater than 2000.
+Sample table: customer1
+![unnamed](https://github.com/user-attachments/assets/92695009-3199-4b2e-a162-e5c24ea8e455)
 
 ```sql
--- Paste your SQL code below for Question 9
+select address,
+sum(salary) as 'SUM(salary)' from customer1
+group by address
+having sum(salary) > 2000;
 ```
 
 **Output:**
 
-![Output9](output.png)
+![image](https://github.com/user-attachments/assets/76aa88be-4e23-413c-9e03-ad61bc283d51)
 
 **Question 10**
 ---
--- Paste Question 10 here
+Write the SQL query that accomplishes the grouping of data by joining date (jdate), calculates the total work hours for each date, and excludes dates where the total work hour sum is not greater than 40.
+Sample table: employee1
+![unnamed](https://github.com/user-attachments/assets/24d67d96-19c0-469a-94eb-0b61ee884492)
 
 ```sql
--- Paste your SQL code below for Question 10
+select jdate,
+sum(workhour) as 'SUM(workhour)' from employee1
+group by jdate
+having sum(workhour) > 40;
 ```
 
 **Output:**
 
-![Output10](output.png)
+![image](https://github.com/user-attachments/assets/4c64d457-19d8-472f-a924-10445a04ccc5)
 
 
 ## RESULT
