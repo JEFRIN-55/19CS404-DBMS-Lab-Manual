@@ -81,34 +81,53 @@ The program should display the employee details or an error message.
 
 ## Code:
 ```sql
-DECLARE
-   CURSOR emp_cur IS
-      SELECT emp_name, designation FROM employees;
-   v_name employees.emp_name%TYPE;
-   v_desg employees.designation%TYPE;
-   found BOOLEAN := FALSE;
-BEGIN
-   OPEN emp_cur;
-   LOOP
-      FETCH emp_cur INTO v_name, v_desg;
-      EXIT WHEN emp_cur%NOTFOUND;
-      DBMS_OUTPUT.PUT_LINE('Name: ' || v_name || ', Designation: ' || v_desg);
-      found := TRUE;
-   END LOOP;
-   CLOSE emp_cur;
+CREATE TABLE employees (
+    emp_id      NUMBER(5),
+    emp_name    VARCHAR2(50),
+    designation VARCHAR2(50)
+);
+INSERT INTO employees VALUES (101, 'Alice', 'Manager');
+INSERT INTO employees VALUES (102, 'Bob', 'Developer');
+INSERT INTO employees VALUES (103, 'Charlie', 'Tester');
 
-   IF NOT found THEN
-      RAISE NO_DATA_FOUND;
-   END IF;
+COMMIT;
+DECLARE
+    v_emp_name    employees.emp_name%TYPE;
+    v_designation employees.designation%TYPE;
+
+    CURSOR emp_cursor IS
+        SELECT emp_name, designation FROM employees;
+
+    no_data EXCEPTION;
+    rows_fetched BOOLEAN := FALSE;
+BEGIN
+    OPEN emp_cursor;
+    
+    LOOP
+        FETCH emp_cursor INTO v_emp_name, v_designation;
+        EXIT WHEN emp_cursor%NOTFOUND;
+
+        rows_fetched := TRUE;
+        DBMS_OUTPUT.PUT_LINE('Name: ' || v_emp_name || ', Designation: ' || v_designation);
+    END LOOP;
+
+    CLOSE emp_cursor;
+
+    IF NOT rows_fetched THEN
+        RAISE no_data;
+    END IF;
+
 EXCEPTION
-   WHEN NO_DATA_FOUND THEN
-      DBMS_OUTPUT.PUT_LINE('No data found.');
-   WHEN OTHERS THEN
-      DBMS_OUTPUT.PUT_LINE('Unexpected error: ' || SQLERRM);
+    WHEN no_data THEN
+        DBMS_OUTPUT.PUT_LINE('No employee records found.');
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('An unexpected error occurred: ' || SQLERRM);
 END;
+/
+
 ```
 
-![image](https://github.com/user-attachments/assets/2aa29add-9a2d-48fc-88d4-75ab5f9b2269)
+![image](https://github.com/user-attachments/assets/667c58cb-d20c-43d4-9fa4-2731a941b9e4)
 
 
 
