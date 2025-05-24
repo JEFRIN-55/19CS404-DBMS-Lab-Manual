@@ -79,6 +79,39 @@ END;
 **Output:**  
 The program should display the employee details or an error message.
 
+## Code:
+```
+DECLARE
+   CURSOR emp_cur IS
+      SELECT emp_name, designation FROM employees;
+   v_name employees.emp_name%TYPE;
+   v_desg employees.designation%TYPE;
+   found BOOLEAN := FALSE;
+BEGIN
+   OPEN emp_cur;
+   LOOP
+      FETCH emp_cur INTO v_name, v_desg;
+      EXIT WHEN emp_cur%NOTFOUND;
+      DBMS_OUTPUT.PUT_LINE('Name: ' || v_name || ', Designation: ' || v_desg);
+      found := TRUE;
+   END LOOP;
+   CLOSE emp_cur;
+
+   IF NOT found THEN
+      RAISE NO_DATA_FOUND;
+   END IF;
+EXCEPTION
+   WHEN NO_DATA_FOUND THEN
+      DBMS_OUTPUT.PUT_LINE('No data found.');
+   WHEN OTHERS THEN
+      DBMS_OUTPUT.PUT_LINE('Unexpected error: ' || SQLERRM);
+END;
+```
+
+![image](https://github.com/user-attachments/assets/2aa29add-9a2d-48fc-88d4-75ab5f9b2269)
+
+
+
 ---
 
 ### **Question 2: Parameterized Cursor with Exception Handling**
